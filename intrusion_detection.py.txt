@@ -1,0 +1,22 @@
+import logging
+from datetime import datetime
+
+logging.basicConfig(
+    filename="security.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+failed_attempts = {}
+
+def log_failed_attempt(username, ip):
+    if username not in failed_attempts:
+        failed_attempts[username] = 0
+
+    failed_attempts[username] += 1
+
+    if failed_attempts[username] >= 3:
+        logging.warning(
+            f"Brute Force Alert! Username: {username}, IP: {ip}, Time: {datetime.now()}"
+        )
+        failed_attempts[username] = 0

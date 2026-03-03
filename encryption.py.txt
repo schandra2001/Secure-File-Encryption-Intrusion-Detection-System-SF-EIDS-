@@ -1,0 +1,38 @@
+from cryptography.fernet import Fernet
+import base64
+import hashlib
+import os
+
+def generate_key(password):
+    return base64.urlsafe_b64encode(hashlib.sha256(password.encode()).digest())
+
+def encrypt_file(filepath, password):
+    key = generate_key(password)
+    cipher = Fernet(key)
+
+    with open(filepath, "rb") as file:
+        data = file.read()
+
+    encrypted_data = cipher.encrypt(data)
+
+    encrypted_path = filepath + ".enc"
+    with open(encrypted_path, "wb") as file:
+        file.write(encrypted_data)
+
+    return encrypted_path
+
+
+def decrypt_file(filepath, password):
+    key = generate_key(password)
+    cipher = Fernet(key)
+
+    with open(filepath, "rb") as file:
+        data = file.read()
+
+    decrypted_data = cipher.decrypt(data)
+
+    decrypted_path = "decrypted_" + os.path.basename(filepath).replace(".enc", "")
+    with open(decrypted_path, "wb") as file:
+        file.write(decrypted_data)
+
+    return decrypted_path

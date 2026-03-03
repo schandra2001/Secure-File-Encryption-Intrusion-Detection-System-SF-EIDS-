@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Secure File Encryption Dashboard</h2>
+    <p>{{ message }}</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        Select File: <input type="file" name="file" required><br><br>
+        File Password: <input type="password" name="file_password" required><br><br>
+
+        <button type="submit" name="encrypt">Encrypt</button>
+        <button type="submit" name="decrypt">Decrypt</button>
+    </form>
+
+    <br>
+    <a href="/logout">Logout</a>
+</body>
+</html>
